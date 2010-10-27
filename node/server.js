@@ -2,9 +2,8 @@ var http = require('http'),
   io = require('./socket.io-node');
 
 server = http.createServer(function(req, res){
-    res.writeHeader(200, {'Content-Type': 'text/html'});
-    res.writeBody('<h1>Hello world</h1>');
-    res.finish();
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World\n');
 });
 
 server.listen(8888);
