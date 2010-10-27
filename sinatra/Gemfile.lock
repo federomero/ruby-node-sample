@@ -1,0 +1,51 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    addressable (2.2.2)
+    data_objects (0.10.2)
+      addressable (~> 2.1)
+    dm-core (1.0.2)
+      addressable (~> 2.2)
+      extlib (~> 0.9.15)
+    dm-do-adapter (1.0.2)
+      data_objects (~> 0.10.2)
+      dm-core (~> 1.0.2)
+    dm-migrations (1.0.2)
+      dm-core (~> 1.0.2)
+    dm-mysql-adapter (1.0.2)
+      dm-do-adapter (~> 1.0.2)
+      do_mysql (~> 0.10.2)
+    dm-serializer (1.0.2)
+      dm-core (~> 1.0.2)
+      fastercsv (~> 1.5.3)
+      json_pure (~> 1.4)
+    dm-timestamps (1.0.2)
+      dm-core (~> 1.0.2)
+    dm-validations (1.0.2)
+      dm-core (~> 1.0.2)
+    do_mysql (0.10.2)
+      data_objects (= 0.10.2)
+    extlib (0.9.15)
+    fastercsv (1.5.3)
+    haml (3.0.22)
+    json_pure (1.4.6)
+    mysql (2.8.1)
+    rack (1.2.1)
+    sinatra (1.1.0)
+      rack (~> 1.1)
+      tilt (~> 1.1)
+    tilt (1.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  dm-core
+  dm-migrations
+  dm-mysql-adapter
+  dm-serializer
+  dm-timestamps
+  dm-validations
+  haml
+  mysql
+  sinatra

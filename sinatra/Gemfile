@@ -1,0 +1,13 @@
+source 'http://rubygems.org'
+
+gem "sinatra"
+gem 'mysql'
+gem 'dm-mysql-adapter'
+
+gem 'dm-core'
+gem 'dm-validations'
+gem 'dm-timestamps'
+gem 'dm-serializer'
+gem 'dm-migrations'
+
+gem "haml"

@@ -1,0 +1,7 @@
+%h1= @list.name || "Unnamed list"
+
+%script= "var tasks = #{@list.tasks.to_json}"
+
+%input#enter-task
+%ul#tasks-done
+%ul#tasks-notdone
