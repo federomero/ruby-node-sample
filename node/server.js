@@ -27,16 +27,22 @@ socket.on('connection', function(client){
   });
   client.on('disconnect', function(){
     var list = lists[client.list_id];
-
-    // remove the client from the list
-    list.splice(list.indexOf(client),1);
-    
-    // If the list is empty, remove it
-    if(list.length == 0){
-      delete list;
+    if (list)
+    {
+      // remove the client from the list
+      list.splice(list.indexOf(client),1);
+      
+      // If the list is empty, remove it
+      if(list.length == 0){
+        delete list;
+      }
     }
   });
 });
+
+var map_clients = function(list_id, func){
+  return lists[list_id] && lists[list_id].map(func) 
+}
 
 var notify = function(list_id, msg){
   console.log(msg);
@@ -52,9 +58,20 @@ var notify = function(list_id, msg){
   }
 }
 
+var task_action = function(action){
+  return function(task){
+    console.log("------",action, task.list_id);
+    map_clients(task.list_id, function(client){
+      client.send(JSON.stringify({action:action, task:task}));
+    });
+  };
+}
+
 //
 // Escuchar RPC, armar mensaje y mandar notify
 //
 
-jsonrpc.expose('notify', notify);
+jsonrpc.expose('finish', task_action('finish'));
+jsonrpc.expose('unfinish', task_action('unfinish'));
+jsonrpc.expose('add', task_action('add'));
 jsonrpc.listen(7000, 'localhost');

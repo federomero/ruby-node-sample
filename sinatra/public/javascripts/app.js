@@ -1,6 +1,8 @@
 var addTask = function(task){
+  if ($("#task-" + task.id).length > 0)
+    return;
   var task_html = ['<li id="task-'+task.id+'">'
-                  ,'<input type="checkbox" />'
+                  ,'<input type="checkbox" class="task-check" ' + (task.done ? "checked=true" : "") +' />'
                   , task.name
                   ,'</li>'].join('')
   $("#tasks-"+(task.done ? "done" : "notdone")).append(task_html);
@@ -8,21 +10,32 @@ var addTask = function(task){
 
 var markAsFinished = function(task_id){
   $("#task-"+task_id).appendTo("#tasks-done");
+  $("#task-"+task_id + " .task-check").attr('checked', true);
 }
 
 var markAsUnfinished = function(task_id){
   $("#task-"+task_id).appendTo("#tasks-notdone");
+  $("#task-"+task_id + " .task-check").attr('checked', false);
 }
-
 
 function initialize_connection(list_id)
 {
   var socket = new io.Socket(location.host.split(':')[0], {port:8888});
 	socket.connect();
-	/*socket.on('message', function(data){
-		alert('got some data' + data);
-	});*/
-  //socket.send(JSON.stringify({action: "open list", list_id: list_id}));
+	socket.on('message', function(data){
+    data = JSON.parse(data);
+    switch(data.action){
+      case "finish":
+        markAsFinished(data.task.id);
+        break;
+      case "unfinish":
+        markAsUnfinished(data.task.id);
+        break;
+      case "add":
+        addTask(data.task);
+    }
+	});
+  socket.send(JSON.stringify({action: "open list", list_id: list_id}));
   return socket;
 }
 
@@ -41,6 +54,7 @@ $(document).ready(function(){
   		  if(task){
     		  addTask(task);  		    
   		  }
+        $("#enter-task").val("");
   		});
   	}
   });
