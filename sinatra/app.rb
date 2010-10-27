@@ -1,5 +1,7 @@
+require 'sinatra'
 require './database'
 require './models'
+require 'jsonrpc'
 
 DataMapper.auto_upgrade!
 
@@ -28,6 +30,8 @@ post '/lists/:list_id/tasks/:id/finish' do
   @task = Task.get(params[:id])
   @task.finish
   if @task.save
+    svc = JsonRPC::Client.new("http://localhost:7000/")
+    svc.request("notify", [params[:list_id], "lalalal"])
     return @task.to_json
   else
     return "false"

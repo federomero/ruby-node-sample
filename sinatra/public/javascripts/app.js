@@ -15,13 +15,25 @@ var markAsUnfinished = function(task_id){
 }
 
 
+function initialize_connection(list_id)
+{
+  var socket = new io.Socket(location.host.split(':')[0], {port:8888});
+	socket.connect();
+	/*socket.on('message', function(data){
+		alert('got some data' + data);
+	});*/
+  //socket.send(JSON.stringify({action: "open list", list_id: list_id}));
+  return socket;
+}
+
 $(document).ready(function(){
-  
+  var list_id = parseInt(location.pathname.replace("/lists/", ''));
+  socket = initialize_connection(list_id);
+
   for(var i =0; i<tasks.length; i++){
     addTask(tasks[i]);
-  }
-  
-  var list_id = parseInt(location.pathname.replace("/lists/", ''));
+  }  
+
   $("#enter-task").keyup(function(e) {
   	if(e.keyCode == 13) {
   		$.post("/lists/"+list_id+"/tasks", {task:{name: $(this).val()}}, function(data){

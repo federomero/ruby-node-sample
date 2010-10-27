@@ -11,3 +11,5 @@ gem 'dm-serializer'
 gem 'dm-migrations'
 
 gem "haml"
+
+gem "jsonrpc" 

@@ -4,7 +4,6 @@
 [submodule "sinatra/public/javascripts/Socket.IO"]
 	path = sinatra/public/javascripts/Socket.IO
 	url = git://github.com/LearnBoost/Socket.IO.git
-
 [submodule "node/jsonrpc"]
 	path = node/jsonrpc
-	url = git@github.com:felipeota/node-jsonrpc.git
+	url = git://github.com/felipeota/node-jsonrpc.git
