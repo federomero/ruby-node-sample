@@ -24,7 +24,9 @@ var rename = function(list){
 
 function initialize_connection(list_id)
 {
-  var socket = new io.Socket(location.host.split(':')[0], {port:8888});
+  io.setPath('');
+  var socket = new io.Socket(location.host.split(':')[0], {port:8888, 
+    transports: ['websocket', 'server-events', 'htmlfile', 'xhr-multipart', 'xhr-polling']});
 	socket.connect();
 	socket.on('message', function(data){
     data = JSON.parse(data);
