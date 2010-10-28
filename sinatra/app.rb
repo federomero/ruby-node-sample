@@ -5,6 +5,12 @@ require 'jsonrpc'
 
 DataMapper.auto_upgrade!
 
+JsonRPC::Client.class_eval do
+  def method_missing(name, *args)
+    request name, args
+  end
+end
+
 svc = JsonRPC::Client.new("http://localhost:7000/")
 
 get '/' do
@@ -21,7 +27,7 @@ post '/lists/:id' do
   @list = List.get(params[:id])
   @list.name = params[:list][:name]
   if @list.save
-    svc.request("rename", [@list])
+    svc.rename(@list)
     return @list.to_json
   else
     return "false"
@@ -34,7 +40,7 @@ post '/lists/:list_id/tasks' do
   @task = Task.new(params[:task])
   @task.list = @list
   if @task.save
-    svc.request("add", [@task])
+    svc.add(@task)
     return @task.to_json
   else
     return "false"
@@ -45,7 +51,7 @@ post '/lists/:list_id/tasks/:id/finish' do
   @task = Task.get(params[:id])
   @task.finish
   if @task.save
-    svc.request("finish", [@task])
+    svc.finish(@task)
     return @task.to_json
   else
     return "false"
@@ -56,7 +62,7 @@ post '/lists/:list_id/tasks/:id/unfinish' do
   @task = Task.get(params[:id])
   @task.unfinish
   if @task.save
-    svc.request("unfinish", [@task])
+    svc.unfinish(@task)
     return @task.to_json
   else
     return "false"
