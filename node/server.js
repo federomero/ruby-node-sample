@@ -67,6 +67,15 @@ var task_action = function(action){
   };
 }
 
+var list_action = function(action){
+  return function(list){
+    console.log("------", action, list.id);
+    map_clients(list.id, function(client){
+      client.send(JSON.stringify({action:action, list:list}));
+    });
+  };
+}
+
 //
 // Escuchar RPC, armar mensaje y mandar notify
 //
@@ -74,4 +83,5 @@ var task_action = function(action){
 jsonrpc.expose('finish', task_action('finish'));
 jsonrpc.expose('unfinish', task_action('unfinish'));
 jsonrpc.expose('add', task_action('add'));
+jsonrpc.expose('rename', list_action('rename'));
 jsonrpc.listen(7000, 'localhost');

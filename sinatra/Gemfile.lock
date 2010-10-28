@@ -29,6 +29,8 @@ GEM
     fastercsv (1.5.3)
     haml (3.0.22)
     json_pure (1.4.6)
+    jsonrpc (0.9.2)
+      addressable
     mysql (2.8.1)
     rack (1.2.1)
     sinatra (1.1.0)
@@ -47,5 +49,6 @@ DEPENDENCIES
   dm-timestamps
   dm-validations
   haml
+  jsonrpc
   mysql
   sinatra

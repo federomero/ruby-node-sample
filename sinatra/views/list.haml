@@ -1,4 +1,4 @@
-%h1= @list.name || "Unnamed list"
+%h1{:contenteditable => "true"}= @list.name || "Unnamed list"
 
 %script= "var tasks = #{@list.tasks.to_json}"
 

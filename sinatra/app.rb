@@ -17,6 +17,18 @@ get '/lists/:id' do
   haml :list
 end
 
+post '/lists/:id' do
+  @list = List.get(params[:id])
+  @list.name = params[:list][:name]
+  if @list.save
+    svc.request("rename", [@list])
+    return @list.to_json
+  else
+    return "false"
+  end
+
+end
+
 post '/lists/:list_id/tasks' do
   @list = List.get(params[:list_id])
   @task = Task.new(params[:task])

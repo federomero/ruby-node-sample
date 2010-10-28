@@ -18,6 +18,10 @@ var markAsUnfinished = function(task_id){
   $("#task-"+task_id + " .task-check").attr('checked', false);
 }
 
+var rename = function(list){
+  $("h1").html(list.name);
+}
+
 function initialize_connection(list_id)
 {
   var socket = new io.Socket(location.host.split(':')[0], {port:8888});
@@ -33,6 +37,10 @@ function initialize_connection(list_id)
         break;
       case "add":
         addTask(data.task);
+        break;
+      case "rename":
+        rename(data.list);
+        break;
     }
 	});
   socket.send(JSON.stringify({action: "open list", list_id: list_id}));
@@ -70,6 +78,14 @@ $(document).ready(function(){
   $("#tasks-notdone input").live('click', function(){
     var task_id = $(this).parents('li').attr('id').split('-')[1];
     $.post("/lists/"+list_id+"/tasks/"+task_id+"/finish", function(data){
+		  var task = JSON.parse(data);
+		  if(task){
+		    markAsFinished(task.id);
+		  }
+		});
+  });
+  $("h1").blur(function(){
+    $.post("/lists/"+list_id,{list:{name: $(this).html()}}, function(data){
 		  var task = JSON.parse(data);
 		  if(task){
 		    markAsFinished(task.id);
