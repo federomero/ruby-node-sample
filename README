@@ -4,15 +4,15 @@ Try it online: http://todo.outboxlabs.com/
 
 Get it:
 
-  git clone git://github.com/federomero/ruby-node-sample.git --recursive
+    git clone git://github.com/federomero/ruby-node-sample.git --recursive
 
 Run node server
 
-  cd node
-  node server.js
+    cd node
+    node server.js
 
 Run sinatra
 
-  cd sinatra
-  rackup
+    cd sinatra
+    rackup
   
