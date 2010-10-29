@@ -1,7 +1,13 @@
-Sample ruby, node app.
+Sample ruby - node app.
 
 Get it:
 
-git clone [repo] --recursive
+git clone git://github.com/federomero/ruby-node-sample.git --recursive
 
-WORK IN PROGRESS
+cd node
+node server.js
+
+cd sinatra
+rackup
+
+

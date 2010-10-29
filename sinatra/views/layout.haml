@@ -4,8 +4,11 @@
     %title Title
     %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8' }/
     %script{:src => "/javascripts/jquery.js"}
+    %script{:src => "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"}
     %script{:src => "http://cdn.socket.io/stable/socket.io.js"}
     %script{:src => "/javascripts/app.js"}
+    %link{:href => "/stylesheets/style.css", :media => "screen, projection",:rel => "stylesheet", :type => "text/css"}
     
   %body
-    = yield
+    .content
+      = yield

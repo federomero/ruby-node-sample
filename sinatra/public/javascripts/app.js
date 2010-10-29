@@ -3,23 +3,28 @@ var addTask = function(task){
     return;
   var task_html = ['<li id="task-'+task.id+'">'
                   ,'<input type="checkbox" class="task-check" ' + (task.done ? "checked=true" : "") +' />'
-                  , task.name
+                  , "<span>"+task.name+"</span>"
                   ,'</li>'].join('')
   $("#tasks-"+(task.done ? "done" : "notdone")).append(task_html);
+  $('#task-'+task.id).effect('highlight');
 }
 
 var markAsFinished = function(task_id){
   $("#task-"+task_id).appendTo("#tasks-done");
   $("#task-"+task_id + " .task-check").attr('checked', true);
+  $('#task-'+task_id).effect('highlight');
 }
 
 var markAsUnfinished = function(task_id){
   $("#task-"+task_id).appendTo("#tasks-notdone");
   $("#task-"+task_id + " .task-check").attr('checked', false);
+  $('#task-'+task_id).effect('highlight');
 }
 
 var rename = function(list){
   $("h1").html(list.name);
+  $('h1').effect('highlight');
+  
 }
 
 function initialize_connection(list_id)
@@ -60,38 +65,19 @@ $(document).ready(function(){
   $("#enter-task").keyup(function(e) {
   	if(e.keyCode == 13) {
   		$.post("/lists/"+list_id+"/tasks", {task:{name: $(this).val()}}, function(data){
-  		  var task = JSON.parse(data);
-  		  if(task){
-    		  addTask(task);  		    
-  		  }
         $("#enter-task").val("");
   		});
   	}
   });
   $("#tasks-done input").live('click', function(){
     var task_id = $(this).parents('li').attr('id').split('-')[1];
-    $.post("/lists/"+list_id+"/tasks/"+task_id+"/unfinish", function(data){
-		  var task = JSON.parse(data);
-		  if(task){
-		    markAsUnfinished(task.id);
-		  }
-		});
+    $.post("/lists/"+list_id+"/tasks/"+task_id+"/unfinish");
   });
   $("#tasks-notdone input").live('click', function(){
     var task_id = $(this).parents('li').attr('id').split('-')[1];
-    $.post("/lists/"+list_id+"/tasks/"+task_id+"/finish", function(data){
-		  var task = JSON.parse(data);
-		  if(task){
-		    markAsFinished(task.id);
-		  }
-		});
+    $.post("/lists/"+list_id+"/tasks/"+task_id+"/finish");
   });
   $("h1").blur(function(){
-    $.post("/lists/"+list_id,{list:{name: $(this).html()}}, function(data){
-		  var task = JSON.parse(data);
-		  if(task){
-		    markAsFinished(task.id);
-		  }
-		});
+    $.post("/lists/"+list_id,{list:{name: $(this).html()}});
   });
 })
