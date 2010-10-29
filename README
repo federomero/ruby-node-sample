@@ -1,13 +1,18 @@
-Sample ruby - node app.
+Simple ToDo list built using ruby (sinatra) and node.js built as a demo for a presentation at http://www.rubyconfuruguay.com.
+
+Try it online: http://todo.outboxlabs.com/
 
 Get it:
 
-git clone git://github.com/federomero/ruby-node-sample.git --recursive
+  git clone git://github.com/federomero/ruby-node-sample.git --recursive
 
-cd node
-node server.js
+Run node server
 
-cd sinatra
-rackup
+  cd node
+  node server.js
 
+Run sinatra
 
+  cd sinatra
+  rackup
+  
